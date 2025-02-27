@@ -1,22 +1,6 @@
 # Parâmetros
 valorTrue = "True"
 valorFalse = "False"
-splitDaEntrada = " "
-mapeamento = True
-indexMapeados = []
-mapeadosA = []
-mapeadosB = []
-
-
-def normalizar(valor):
-    tratado = float(valor)
-    while tratado > 1:
-        tratado = tratado / 10
-    return tratado
-
-def mapear(valor):
-    i = mapeadosB.index(valor)
-    return float(mapeadosA[i])
 
 def degrau(u):
     if u >= 0:
@@ -26,7 +10,7 @@ def degrau(u):
 
 for i in range(50):
     entradas = input(f"Digite: ")
-    entradas = entradas.split(splitDaEntrada)
+    entradas = entradas.split(",")
 
     # Limiar e Pesos Sinápticos
     with open('./treinamento/pesos.txt', 'r') as arqPesos:
@@ -34,10 +18,7 @@ for i in range(50):
         
     u = -1 * float(pesos[0])
     for i, valor in enumerate(entradas):
-        if mapeamento and i in indexMapeados:
-            u = u + float(pesos[i + 1]) * normalizar(mapear(valor))
-        else:
-            u = u + float(pesos[i + 1]) * normalizar(valor)
+        u = u + float(pesos[i + 1]) * float(valor)
 
     y = degrau(u)
 
